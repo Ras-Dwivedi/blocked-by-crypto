@@ -1,21 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My GitHub Pages Site</title>
+    <title>Ras Dwivedi</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
+            background: url('background-image.jpg') center center fixed;
+            background-size: cover;
+            color: #000;
         }
 
         h1 {
-            color: #333;
+            color: #000;
+        }
+
+        .intro {
+            display: flex;
+            align-items: center;
+        }
+
+        .intro-name {
+            margin-right: 10px;
+        }
+
+        .intro-photo {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+            margin-left: auto;
+        }
+
+        .section-title {
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: calc(33.33% - 20px);
+            float: left;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: #000;
+        }
+
+        .card:nth-child(3n+1) {
+            clear: left;
+        }
+
+        .paper-list-item {
+            margin-bottom: 5px;
+        }
+
+        .section-links {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .section-links a {
+            color: #000;
+            text-decoration: underline;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to My GitHub Pages Site</h1>
-    <p>This is a sample page for GitHub Pages. Feel free to customize it as per your needs!</p>
+    <div class="section-links">
+        <a href="#projects">Projects</a>
+        <a href="#papers">Published Papers</a>
+        <a href="#blogs">Blog Links</a>
+    </div>
+
+    <div class="intro">
+        <div class="intro-name">
+            <h1>Ras Dwivedi</h1>
+            <p>B.Tech, IIT Kanpur</p>
+        </div>
+        <div class="intro-photo">
+            <img src="profile-image.jpg" alt="Profile Image">
+        </div>
+    </div>
+
+    <p>I am pursuing my Ph.D in Computer Science and Engineering at Indian Institute of Technology, Kanpur. I completed my Bachelors in Mechanical Engineering from IIT Kanpur in 2011. I am interested in Blockchains, Cryptography, and Machine Learning. I have been working as a senior student research associate at the National Blockchain Project since October 2018.</p>
+
+    <!-- <div id="projects" class="section-title">Projects</div>
+    <div class="card">
+        <h2>Project 1</h2>
+        <p>Description of project 1.</p>
+    </div>
+    <div class="card">
+        <h2>Project 2</h2>
+        <p>Description of project 2.</p>
+    </div>
+    <div class="card">
+        <h2>Project 3</h2>
+        <p>Description of project 3.</p>
+    </div>
+ -->
+    <div id="papers" class="section-title">Published Papers</div>
+    <ul class="paper-list">
+        <li class="paper-list-item">Paper 1</li>
+        <li class="paper-list-item">Paper 2</li>
+        <li class="paper-list-item">Paper 3</li>
+    </ul>
+
+    <div id="blogs" class="section-title">Blog Links</div>
+    <ul class="blog-links">
+        <li><a href="#">Blog 1</a></li>
+        <li><a href="#">Blog 2</a></li>
+        <li><a href="#">Blog 3</a></li>
+    </ul>
 </body>
 </html>
