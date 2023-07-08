@@ -3,20 +3,19 @@
 
 ## One-Way Functions
 
-In the field of cryptology, one-way functions are essential building blocks that underpin many cryptographic protocols and systems. A one-way function is a mathematical function that is computationally easy to compute in one direction but challenging to reverse. Mathematically, a one-way function $$f$$ is defined as:
+In the field of cryptography, one-way functions are essential building blocks that underpin many cryptographic protocols and systems. A one-way function is a mathematical function that is computationally easy to compute in one direction but challenging to reverse. Mathematically, a one-way function f is defined as:
 
-$$f(x) = y$$
+&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;  $$f(x) = y$$
 
-where given an input $$x$$, it is easy to compute the output $$y = f(x)$$. However, given $y$, it is computationally difficult to find the original input $$x$$.
+where given an input x, it is easy to compute the output y = f(x). However, given y, it is computationally difficult to find the original input x.
+
 
 The security of many cryptographic protocols, such as digital signatures, encryption algorithms, and password hashing, relies on the existence of one-way functions.
-
-## Importance in Cryptology
+## Importance in Cryptography
 
 ### Encryption
 
 One-way functions are used in encryption algorithms to provide confidentiality. For instance, in asymmetric encryption schemes like RSA, the difficulty of factoring large composite numbers into their prime factors relies on the assumption that the related mathematical functions are one-way. Breaking the encryption would require the ability to efficiently reverse the one-way function.
-
 ### Password Hashing
 
 In password-based systems, one-way functions play a crucial role in password hashing. When a user creates an account or changes their password, their password is passed through a one-way hash function, such as bcrypt or SHA-256. The resulting hash value is stored in the system's database instead of the actual password. When the user attempts to log in, the system hashes the entered password and compares it with the stored hash. This way, even if the stored hash is compromised, an attacker would need to reverse the one-way hash function to obtain the original password.
@@ -28,52 +27,33 @@ Digital signature schemes rely on the security of one-way functions to ensure th
 ## Implication for P vs. NP
 
 The existence of secure one-way functions has significant implications for the computational complexity classes P and NP. The question of whether P (polynomial time) is equal to NP (nondeterministic polynomial time) remains an open problem in computer science and mathematics.
-
 The existence of secure one-way functions provides evidence that P ≠ NP. If it were possible to reverse a one-way function efficiently, it would imply that problems in NP could be solved in polynomial time, leading to P = NP. However, since the existence of secure one-way functions is widely believed, it strengthens the argument that P and NP are separate complexity classes.
-
 
 # Lamport One-Time Signature
 Lamport one-time signature is a cryptographic scheme invented by Leslie Lamport in 1979. It is a digital signature scheme known for its simplicity and security. The Lamport signature scheme is based on the concept of one-way functions and hash functions.
-
 ## Overview
 The Lamport one-time signature scheme is designed to provide a digital signature that can only be used once. It is called a one-time signature because the private key used to sign a message is consumed during the signing process, making it impossible to use the same key for multiple signatures. This property provides protection against key reuse attacks.
 
-The scheme is based on a simple idea: instead of directly signing the entire message, a hash function is used to create a digest of the message. The digest is divided into multiple parts, and each part is used to generate a digital signature. These signatures collectively form the Lamport signature.
+The scheme is based on a simple idea: instead of directly signing the entire message, a hash function is used to create a digest of the message. The digest (hash) is then divided into bits and each bit is then used to generate a random string, which form the signature. 
 
 `NOTE`  *Signing hash instead of message is a common practice when the message space is unbounded and the signature algorithm needs a bounded message space.* 
+`NOTE` It is the one time signature scheme, and keys cannot be used to sign the second message. Signing of the message leaks the secret key. 
 
-# Key Generation
+## Key Generation
 To generate the keys for the Lamport signature scheme, a random private key is generated. The private key consists of a sequence of random binary strings, typically 0s and 1s. Each bit of the private key is used to generate a corresponding public key.
 for message of length $$n$$
-choose $$(x_{10}, x_{11}, x_{20}, x_{21}.... x_{n0}, x_{n1})$$ radomly as `secret key`
-publish the `public key` as $$(y_{10}, y_{11}, y_{20}, y_{21}.... y_{n0}, y_{n1})$$
+choose $$(x_{1,0}, x_{1,1}, x_{2,0}, x_{2,1}.... x_{n,0}, x_{n,1})$$ radomly as `secret key`
+publish the `public key` as $$(y_{1,0}, y_{1,1}, y_{2,0}, y_{2,1}.... y_{n,0}, y_{n,1})$$
 where $$y_{ij} = f(x_{ij})$$ and $$f$$ is one way function 
 
-# Signing Process
+## Signing Process
 To sign a message using Lamport one-time signature, the following steps are performed:
-
-Compute the hash digest of the message using a cryptographic hash function.
-Divide the digest into individual parts, typically equal in size to the hash function's output length.
-For each part of the digest, locate the corresponding bit in the private key.
-If the bit is 0, append the hash value of the bit's index to the signature.
-If the bit is 1, append the hash value of the complement of the bit's index to the signature.
-Repeat steps 3-5 for each part of the digest to complete the signature.
-The resulting signature is a sequence of hash values, each corresponding to a bit of the original digest. This signature can be attached to the message for verification.
-
-# Verification Process
-The verification of a Lamport one-time signature involves the following steps:
-
-Compute the hash digest of the message using the same hash function as used during the signing process.
-Divide the digest into individual parts, just like in the signing process.
-For each part of the digest, locate the corresponding bit in the signature.
-If the bit is 0, compare the hash value of the bit's index with the corresponding part of the digest.
-If the bit is 1, compare the hash value of the complement of the bit's index with the corresponding part of the digest.
-If all the hash value comparisons match, the signature is considered valid.
-If the signature is valid, it indicates that the message has not been tampered with and was signed using the correct private key. However, due to the one-time nature of the scheme, the private key used for the signature must be discarded after verification.
-
-# Security Considerations
-While the Lamport one-time signature scheme offers simplicity and security, it does have some limitations. The primary limitation is its vulnerability to a chosen message attack. If an attacker has access to the public key and can choose the messages to be signed, they can potentially recover the private key by exploiting the deterministic nature of the scheme.
-
-To mitigate this vulnerability, the Lamport scheme is often used in combination with other cryptographic techniques, such as the Merkle signature scheme. By using a Merkle tree structure, the Lamport scheme can be extended to provide multiple signatures using a single private key while maintaining the security properties.
-
-Despite its limitations, the Lamport one-time signature scheme has been an influential concept in the field of cryptography. Its simplicity and secure nature make it an interesting option for certain scenarios where one-time signatures are sufficient.
+1. Compute the hash $$h$$of the message. This step is needed to map the unbounded message space to the desired message space
+2. For each bit $$b_i$$ at the position $$i$$ in $$h$$ output the secret key $$x_{i,0}$$ if the bit $$b_i$$ was 0 else output $$x_{i,1}$$ 
+## Verification 
+Verification process for the message $$m$$ and the signature $$\sigma$$ for the public key $$pk$$ is as follows.
+`Note` that the signature $$\sigma$$ is the array of stings $$( x_i, x_2 .... x_n)$$
+1. For given message $$m$$ calculate hash of the message $$h$$
+2. for each bit $$b_i$$ at position $$i$$ in the $$h$$ verify
+        &#8195;&#8195;&#8195;&#8195; $$f(x_i) = y_{i,b_i}$$ 
+where $$x_i$$ is the string at the $$i^{th}$$ position in the signature array
